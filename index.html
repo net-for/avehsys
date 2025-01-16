@@ -1,93 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SA-MP HUD</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: transparent;
-            font-family: Arial, sans-serif;
-            color: #fff;
-        }
-        #hud {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 300px;
-            height: 150px;
-            padding: 15px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        #speedometer {
-            font-size: 24px;
-            text-align: center;
-        }
-        #greenzone {
-            margin-top: 10px;
-            text-align: center;
-            font-size: 18px;
-            color: green;
-        }
-        #notifications {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #ff5733;
-            text-align: center;
-        }
-    </style>
+<title>My Gamemode HUD</title>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+.hud-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hud-content {
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.speedometer {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.speedometer-needle {
+  position: absolute;
+  width: 80%;
+  height: 2px;
+  background-color: red;
+  transform-origin: 50% 100%; 
+}
+
+.greenzone {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(0, 255, 0, 0.2);
+  opacity: 0.5;
+  pointer-events: none; 
+}
+
+.notifications {
+  margin-top: 20px;
+}
+
+.notification {
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 3px;
+}
+</style>
 </head>
 <body>
-    <div id="hud">
-        <div id="speedometer">Speed: 0 km/h</div>
-        <div id="greenzone">Greenzone: No</div>
-        <div id="notifications"></div>
+
+<div class="hud-container">
+  <div class="hud-content">
+    <div class="speedometer">
+      <div class="greenzone"></div>
+      <div class="speedometer-needle"></div>
     </div>
+    <div class="notifications"></div>
+  </div>
+</div>
 
-    <script>
-        // Event handler for updating the speedometer
-        function updateSpeedometer(speed) {
-            document.getElementById('speedometer').innerText = 'Speed: ' + speed.toFixed(1) + ' km/h';
-        }
+<script>
+// JavaScript for speedometer needle rotation
+const speedometerNeedle = document.querySelector('.speedometer-needle');
+const greenzone = document.querySelector('.greenzone');
 
-        // Event handler for greenzone status
-        function updateGreenzone(status) {
-            document.getElementById('greenzone').innerText = 'Greenzone: ' + (status ? 'Yes' : 'No');
-        }
+function updateSpeedometer(speed) {
+  // Calculate needle rotation angle (adjust based on your desired range)
+  const maxSpeed = 200; // Example: Maximum speed
+  const rotation = (speed / maxSpeed) * 180; 
+  speedometerNeedle.style.transform = `rotate(${rotation}deg)`;
 
-        // Event handler for vehicle engine status
-        function updateVehicleEngineStatus(status) {
-            let message = status ? 'Engine On' : 'Engine Off';
-            showNotification(message);
-        }
+  // Adjust greenzone size based on speed (optional)
+  const greenzoneSize = (speed / maxSpeed) * 100; 
+  greenzone.style.width = `${greenzoneSize}%`;
+  greenzone.style.height = `${greenzoneSize}%`;
+}
 
-        // Event handler for vehicle lock status
-        function updateVehicleLockStatus(status) {
-            let message = status ? 'Car Locked' : 'Car Unlocked';
-            showNotification(message);
-        }
+// Example: Receive speed from server (replace with actual server communication)
+setInterval(() => {
+  // Simulate random speed for demonstration
+  const randomSpeed = Math.floor(Math.random() * 201); 
+  updateSpeedometer(randomSpeed);
+}, 100);
 
-        // Event handler for notifications
-        function showNotification(message) {
-            const notifications = document.getElementById('notifications');
-            notifications.innerText = message;
-            setTimeout(function() {
-                notifications.innerText = '';
-            }, 3000); // Clear notification after 3 seconds
-        }
+// Function to add notifications
+function addNotification(message) {
+  const notificationsDiv = document.querySelector('.notifications');
+  const notification = document.createElement('div');
+  notification.classList.add('notification');
+  notification.textContent = message;
+  notificationsDiv.appendChild(notification);
 
-        // Function to handle ESC key press (close the interface)
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                cef_emit_event('CloseHUD');
-            }
-        });
-    </script>
+  // Remove notification after a short time
+  setTimeout(() => {
+    notification.remove();
+  }, 3000); // Remove after 3 seconds
+}
+
+// Example: Receive notifications from server
+setInterval(() => {
+  const randomNotification = Math.random();
+  if (randomNotification < 0.1) { 
+    const messages = [
+      "Car locked.",
+      "Car unlocked.",
+      "Engine started.",
+      "Engine stopped."
+    ];
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    addNotification(messages[randomIndex]);
+  }
+}, 2000); // Send notifications every 2 seconds (adjust as needed)
+
+</script>
+
 </body>
 </html>
