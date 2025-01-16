@@ -3,92 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Royal Pass</title>
+    <title>SA-MP HUD</title>
     <style>
         body {
-            background-color: rgba(0, 0, 0, 0.7);
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 0;
+            background: transparent;
+            font-family: Arial, sans-serif;
+            color: #fff;
         }
-        .royal-pass {
-            width: 400px;
-            padding: 20px;
-            background-color: #222;
-            border-radius: 10px;
-            text-align: center;
-            color: white;
-        }
-        .level {
-            font-size: 20px;
-        }
-        .progress-bar {
-            width: 100%;
-            height: 20px;
-            background-color: #555;
-            margin: 10px 0;
-        }
-        .progress {
-            height: 100%;
-            background-color: #ff5733;
-            width: 0%;
-        }
-        .claim-button {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #ff5733;
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .claim-button:hover {
-            background-color: #c43f29;
-        }
-        .close-btn {
+        #hud {
             position: absolute;
             top: 10px;
-            right: 10px;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
+            left: 10px;
+            width: 300px;
+            height: 150px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        #speedometer {
+            font-size: 24px;
+            text-align: center;
+        }
+        #greenzone {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 18px;
+            color: green;
+        }
+        #notifications {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #ff5733;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="royal-pass">
-        <button class="close-btn" onclick="closeRoyalPass()">X</button>
-        <h2>Royal Pass</h2>
-        <div id="level" class="level">Level: 1</div>
-        <div id="progress-bar" class="progress-bar">
-            <div id="progress" class="progress"></div>
-        </div>
-        <button class="claim-button" onclick="claimReward()">Claim Reward</button>
+    <div id="hud">
+        <div id="speedometer">Speed: 0 km/h</div>
+        <div id="greenzone">Greenzone: No</div>
+        <div id="notifications"></div>
     </div>
+
     <script>
-        function updateRoyalPassUI(level, progress) {
-            document.getElementById('level').innerText = 'Level: ' + level;
-            document.getElementById('progress').style.width = progress + '%';
+        // Event handler for updating the speedometer
+        function updateSpeedometer(speed) {
+            document.getElementById('speedometer').innerText = 'Speed: ' + speed.toFixed(1) + ' km/h';
         }
 
-        function claimReward() {
-            cef_emit_event('ClaimRoyalPassReward');
+        // Event handler for greenzone status
+        function updateGreenzone(status) {
+            document.getElementById('greenzone').innerText = 'Greenzone: ' + (status ? 'Yes' : 'No');
         }
 
-        function closeRoyalPass() {
-            cef_emit_event('CloseRoyalPassUI');
+        // Event handler for vehicle engine status
+        function updateVehicleEngineStatus(status) {
+            let message = status ? 'Engine On' : 'Engine Off';
+            showNotification(message);
         }
 
-        // Event listener for closing with ESC key
+        // Event handler for vehicle lock status
+        function updateVehicleLockStatus(status) {
+            let message = status ? 'Car Locked' : 'Car Unlocked';
+            showNotification(message);
+        }
+
+        // Event handler for notifications
+        function showNotification(message) {
+            const notifications = document.getElementById('notifications');
+            notifications.innerText = message;
+            setTimeout(function() {
+                notifications.innerText = '';
+            }, 3000); // Clear notification after 3 seconds
+        }
+
+        // Function to handle ESC key press (close the interface)
         document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
-                closeRoyalPass();
+            if (event.key === 'Escape') {
+                cef_emit_event('CloseHUD');
             }
         });
     </script>
