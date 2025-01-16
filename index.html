@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Spawner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        h1 {
+            color: #ff4d4d;
+            text-shadow: 0 0 10px #ff4d4d, 0 0 20px #8b00ff;
+            margin-bottom: 20px;
+        }
+        .vehicles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        .vehicle {
+            background: linear-gradient(45deg, #ff4d4d, #8b00ff);
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            color: white;
+            text-shadow: 0 0 10px white;
+            box-shadow: 0 0 15px #8b00ff;
+        }
+        .vehicle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px #ff4d4d;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #8b00ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .close:hover {
+            background: #ff4d4d;
+        }
+    </style>
+</head>
+<body>
+    <button class="close" onclick="closeBrowser()">X</button>
+    <h1>Vehicle Spawner</h1>
+    <div class="vehicles">
+        <!-- Replace these with vehicle thumbnails -->
+        <div class="vehicle" onclick="selectVehicle(411)">Infernus (411)</div>
+        <div class="vehicle" onclick="selectVehicle(451)">Turismo (451)</div>
+        <div class="vehicle" onclick="selectVehicle(520)">Hydra (520)</div>
+        <!-- Add more vehicles as needed -->
+    </div>
+
+    <script>
+        // Function to close the CEF browser
+        function closeBrowser() {
+            mp.trigger("cef_close_browser");
+        }
+
+        // Function to select a vehicle
+        function selectVehicle(vehicleId) {
+            mp.trigger("OnVehicleSpawnSelect", vehicleId); // Send vehicle ID to the server
+            alert("Vehicle " + vehicleId + " selected!");
+        }
+    </script>
+</body>
+</html>
