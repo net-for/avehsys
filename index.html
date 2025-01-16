@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle Spawner</title>
     <style>
-        /* Reset styles */
         * {
             margin: 0;
             padding: 0;
@@ -109,7 +108,6 @@
             <img src="https://via.placeholder.com/70x70?text=Plane" alt="Hydra">
             <span>Hydra</span>
         </div>
-        <!-- Add more vehicle blocks as needed -->
     </div>
 
     <script>
@@ -126,7 +124,6 @@
          */
         function selectVehicle(vehicleId) {
             mp.trigger("OnVehicleSpawnSelect", vehicleId); // Notify the server about the selected vehicle
-            alert("Vehicle " + vehicleId + " selected!");
         }
     </script>
 </body>
