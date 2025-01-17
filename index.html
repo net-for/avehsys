@@ -3,36 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Spawner</title>
     <link rel="stylesheet" href="vehuu.css">
+    <title>Vehicle Spawner</title>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>Vehicle Spawner</h1>
-            <button class="close-btn" onclick="closeWindow()">X</button>
+            <button id="closeButton">X</button>
         </div>
         <div class="content">
-            <label for="vehicleId">Enter Vehicle ID:</label>
-            <input type="number" id="vehicleId" placeholder="e.g., 411">
-            <button class="spawn-btn" onclick="spawnVehicle()">Spawn Vehicle</button>
+            <input type="number" id="vehicleId" placeholder="Enter Vehicle ID">
+            <button id="spawnButton">Spawn Vehicle</button>
         </div>
     </div>
-    <script>
-        // Function to close the CEF window
-        function closeWindow() {
-            cef.emit("onCloseVevuu"); // Use `cef.emit` to send events to the server
-        }
-
-        // Function to spawn a vehicle
-        function spawnVehicle() {
-            const vehicleId = document.getElementById("vehicleId").value;
-            if (vehicleId) {
-                cef.emit("onSpawnVehicle", parseInt(vehicleId));
-            } else {
-                alert("Please enter a valid vehicle ID.");
-            }
-        }
-    </script>
+    <script src="vehuu.js"></script>
 </body>
 </html>
