@@ -1,21 +1,19 @@
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
-    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
-    color: white;
+    background: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: 0;
 }
 
 .container {
-    background-color: rgba(255, 0, 0, 0.9); /* Red-themed background */
+    background: linear-gradient(145deg, #ff0000, #800080);
+    border-radius: 15px;
+    width: 400px;
     padding: 20px;
-    border-radius: 10px;
-    width: 300px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    text-align: center;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 .header {
@@ -26,20 +24,16 @@ body {
 }
 
 .header h1 {
-    font-size: 1.5em;
+    color: white;
     margin: 0;
 }
 
-.close-btn {
-    background-color: white;
-    color: red;
+#closeButton {
+    background: transparent;
+    color: white;
     border: none;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    font-size: 1em;
+    font-size: 20px;
     cursor: pointer;
-    outline: none;
 }
 
 .content {
@@ -48,25 +42,19 @@ body {
     gap: 10px;
 }
 
-input {
+#vehicleId {
     padding: 10px;
+    font-size: 16px;
     border: none;
     border-radius: 5px;
-    font-size: 1em;
-    width: 100%;
 }
 
-.spawn-btn {
-    background-color: white;
-    color: red;
+#spawnButton {
+    background: #4CAF50;
+    color: white;
     border: none;
     padding: 10px;
     border-radius: 5px;
-    font-size: 1em;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.spawn-btn:hover {
-    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
 }
