@@ -110,11 +110,15 @@
   </div>
 <script>
   document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') {
-      // Notify the server to close the browser
-      cef.emit('closeMenu');
-    }
-  });
+  if (event.key === 'Escape') {
+    // Notify the server to close the browser
+    cef.emit('closeMenu');
+
+    // Hide the cursor and ensure game input is restored
+    cef.call('restoreGameControls');
+  }
+});
+
 </script>
 
 </body>
