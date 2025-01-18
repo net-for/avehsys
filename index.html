@@ -1,22 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="vehuu.css">
-    <title>Vehicle Spawner</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help Menu</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: rgba(0, 0, 0, 0.5); /* Transparent background */
+      color: white;
+      overflow: hidden;
+    }
+    .menu-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%; /* Covers half the screen */
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 1em;
+    }
+    li {
+      margin: 0.5em 0;
+    }
+    li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2em;
+    }
+    li a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Vehicle Spawner</h1>
-            <button id="closeButton">X</button>
-        </div>
-        <div class="content">
-            <input type="number" id="vehicleId" placeholder="Enter Vehicle ID">
-            <button id="spawnButton">Spawn Vehicle</button>
-        </div>
-    </div>
-    <script src="vehuu.js"></script>
+  <div class="menu-container">
+    <h1>Help Menu</h1>
+    <ul>
+      <li><a href="#command1">Command 1</a></li>
+      <li><a href="#command2">Command 2</a></li>
+      <li><a href="#command3">Command 3</a></li>
+    </ul>
+  </div>
 </body>
 </html>
