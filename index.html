@@ -56,5 +56,15 @@
       <li><a href="#command3">Command 3</a></li>
     </ul>
   </div>
+
+  <script>
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      // Notify the server to close the browser
+      cef.emit('closeMenu');
+    }
+  });
+</script>
+
 </body>
 </html>
