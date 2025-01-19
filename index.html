@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Help Menu</title>
+  
+  <!-- Google Fonts for custom font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  
   <style>
     /* Reset and Base Styles */
     * {
@@ -31,6 +34,24 @@
       background: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
       border-radius: 15px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    /* Close Button */
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      color: #ffd700;
+      border: none;
+      font-size: 1.5em;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .close-btn:hover {
+      color: #ff4b2b;
     }
 
     /* Title */
@@ -92,10 +113,26 @@
     .menu-footer a:hover {
       text-decoration: underline;
     }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .menu-container {
+        width: 90%;
+      }
+
+      .menu-title {
+        font-size: 2em;
+      }
+
+      .menu-list li {
+        font-size: 1.1em;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="menu-container">
+    <button class="close-btn" onclick="closeWindow()">X</button>
     <h1 class="menu-title">Help Menu</h1>
     <ul class="menu-list">
       <li><a href="#command1">📜 Command 1</a></li>
@@ -108,18 +145,21 @@
       <p>Need more help? <a href="#support">Contact Support</a></p>
     </div>
   </div>
-<script>
-  document.addEventListener('keydown', function (event) {
-  if (event.key === 'Escape') {
-    // Notify the server to close the browser
-    cef.emit('closeMenu');
 
-    // Hide the cursor and ensure game input is restored
-    cef.call('restoreGameControls');
-  }
-});
+  <script>
+    // Function to close the CEF window when the "X" button is clicked
+    function closeWindow() {
+      // Emit event to notify the server to close the browser window
+      window.external.emitEvent("close_browser");
+    }
 
-</script>
-
+    // Listen for keydown event (Escape key to close the help menu)
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        // Emit event to close the browser when "Escape" key is pressed
+        window.external.emitEvent("close_browser");
+      }
+    });
+  </script>
 </body>
 </html>
